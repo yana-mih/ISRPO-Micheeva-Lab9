@@ -1,4 +1,4 @@
-name: GH actions on workflow_dispatch common 1
+name: GH actions on workflow_dispatch for common 1
 on: [workflow_dispatch]
 jobs:
   build:
