@@ -1,0 +1,38 @@
+name: GH actions on workflow_dispatch common 3
+on: [workflow_dispatch]
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x.x
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build
+        run: dotnet build 
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: testing
+        run: dotnet test --configuration Debug
+  dotnet-analyze:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup dotnet-format
+        run: dotnet tool install -g dotnet-format
+      - name: analyze
+        run: dotnet format
